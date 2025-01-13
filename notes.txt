@@ -1,0 +1,39 @@
+Marshalling Data
+front to back: json > python > SQL
+back to front: SQL > python > json > JS / React
+
+
+Instantiate SQLAlchemy Database (Python REPL)
+>>> from app import app
+>>> from app import db
+>>> with app.app_context():
+...     db.create_all()
+
+
+DEPLOYMENT
+GitHub: git add . 
+git commit -m ""
+git push
+
+Connect to Cloud platform
+
+Heroku:
+- build (set up VM, set up environment)
+- compile (npm install -> npm run build )
+- execute (npm run start -> runtime)
+
+HTTP Request Status codes (which part is failing)
+100 - informational
+200 - success
+300 - caveats
+400 - client error
+500 - server error
+
+Create Read Update Delete - actions
+HTTP REQUEST METHODS
+GET (Browser ONLY sends GET request)
+POST (POSTMAN sends other methods)
+PUT / PATCH
+DELETE
+
+HTTP REQUEST: <URL> | <METHOD (GET)> | *DATA (JSON)*
