@@ -3,6 +3,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_marshmallow import Marshmallow
 import os
 
+
 app = Flask(__name__)
 
 basedir = os.path.abspath(os.path.dirname(__file__))
@@ -29,6 +30,31 @@ guides_schema = GuideSchema(many=True)
 @app.route('/', methods=["GET"])
 def root_route():
     return 'hello world!'
+
+
+
+@app.route('/test', methods=['GET'])
+def test():
+    return {
+        "name" : "William"
+    }
+
+# Endpoint to create a new guide
+@app.route('/login', methods=["POST"])
+def login():
+    email = request.json['email']
+    pw = request.json['password']
+    if email == "alexis@mymail.com" and pw == "lexilou":
+        return {
+            "message" : "success"
+        }    
+        # return "good"   
+    else:
+        return {
+            "message" : "invalid"
+        }    
+        # return "bad" 
+
 
 # Endpoint to create a new guide
 @app.route('/guide', methods=["POST"])
