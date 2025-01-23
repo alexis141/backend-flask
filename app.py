@@ -1,10 +1,15 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, session
 from flask_sqlalchemy import SQLAlchemy
 from flask_marshmallow import Marshmallow
+from flask_cors import CORS, cross_origin
 import os
 
 
 app = Flask(__name__)
+CORS(app)
+#cors=CORS(app, resources={r"/*": {"origins": "http://localhost:3000"}})
+#app.config['CORS_HEADERS'] = 'Content-Type'
+
 
 basedir = os.path.abspath(os.path.dirname(__file__))
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(basedir, 'app.sqlite')
@@ -27,33 +32,45 @@ class GuideSchema(ma.Schema):
 guide_schema = GuideSchema()
 guides_schema = GuideSchema(many=True)
 
+# @app.before_request
+# def handle_preflight():
+#     if request.method == "OPTIONS":
+#         res = Response()
+#         res.headers['X-Content-Type-Options'] = '*'
+#         return res
+    
+# @app.after_request
+# def handle_postflight(response):
+#     response.headers.add('Access-Control-Allow-Headers', '*')
+#     response.headers.add('Access-Control-Allow-Origin', '*')
+
+
 @app.route('/', methods=["GET"])
 def root_route():
     return 'hello world!'
 
 
 
-@app.route('/test', methods=['GET'])
-def test():
-    return {
-        "name" : "William"
-    }
-
 # Endpoint to create a new guide
 @app.route('/login', methods=["POST"])
+#@cross_origin()
 def login():
-    email = request.json['email']
-    pw = request.json['password']
-    if email == "alexis@mymail.com" and pw == "lexilou":
+    email = request.json.get('email')
+    pw = request.json.get('password')
+    if email == "alexis@gmail.com" and pw == "123":
         return {
             "message" : "success"
-        }    
-        # return "good"   
+        }     
     else:
         return {
             "message" : "invalid"
         }    
-        # return "bad" 
+
+@app.route('/logged_in', methods=["GET"])
+def logged_in():
+    if 'user' in session:
+        return {"logged_in": True, "user": session['user']}
+    return {"logged_in": False}
 
 
 # Endpoint to create a new guide
@@ -98,6 +115,7 @@ def guide_update(id):
     db.session.commit()
     return guide_schema.jsonify(guide)
 
+
 #Endpoint for deleting a record
 @app.route("/guide/<id>", methods=["DELETE"])
 def guide_delete(id):
@@ -110,4 +128,4 @@ def guide_delete(id):
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True, port=8001)
