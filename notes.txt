@@ -37,3 +37,12 @@ PUT / PATCH
 DELETE
 
 HTTP REQUEST: <URL> | <METHOD (GET)> | *DATA (JSON)*
+
+DEPLOYMENT
+- ignore venv stuff (use pipenv)
+- do install gunicorn
+- do create Procfile
+- optional step - requisition postgresql resource for database and add connection in Flask code, instantiate db after it's deployed
+- deploy like react app
+- Make note of URL for backend, edit front-end end-points
+- Make sure github / project code are latest version
