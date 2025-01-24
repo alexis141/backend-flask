@@ -1,7 +1,7 @@
 from flask import Flask, request, jsonify, session
 from flask_sqlalchemy import SQLAlchemy
 from flask_marshmallow import Marshmallow
-from flask_cors import CORS, cross_origin
+from flask_cors import CORS
 import os
 
 
@@ -39,7 +39,7 @@ def root_route():
 def login():
     email = request.json.get('email')
     pw = request.json.get('password')
-    if email == "alexis@gmail.com" and pw == "123":
+    if email == "alexis@gmail.com" and pw == "lexilou":
         return {
             "message" : "success"
         }     
