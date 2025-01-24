@@ -7,9 +7,6 @@ import os
 
 app = Flask(__name__)
 CORS(app)
-#cors=CORS(app, resources={r"/*": {"origins": "http://localhost:3000"}})
-#app.config['CORS_HEADERS'] = 'Content-Type'
-
 
 basedir = os.path.abspath(os.path.dirname(__file__))
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(basedir, 'app.sqlite')
@@ -32,24 +29,9 @@ class GuideSchema(ma.Schema):
 guide_schema = GuideSchema()
 guides_schema = GuideSchema(many=True)
 
-# @app.before_request
-# def handle_preflight():
-#     if request.method == "OPTIONS":
-#         res = Response()
-#         res.headers['X-Content-Type-Options'] = '*'
-#         return res
-    
-# @app.after_request
-# def handle_postflight(response):
-#     response.headers.add('Access-Control-Allow-Headers', '*')
-#     response.headers.add('Access-Control-Allow-Origin', '*')
-
-
 @app.route('/', methods=["GET"])
 def root_route():
     return 'hello world!'
-
-
 
 # Endpoint to create a new guide
 @app.route('/login', methods=["POST"])
